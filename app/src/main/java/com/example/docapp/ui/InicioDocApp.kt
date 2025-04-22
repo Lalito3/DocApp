@@ -83,7 +83,7 @@ fun InicioScreen(viewModel: DocAppviewmodel = viewModel(), navController: NavCon
         Spacer(modifier = Modifier.height(16.dp))
 
         Button(
-            onClick = { viewModel.habilitarRegistro() },
+            onClick = {navController.navigate("Menu") },
             modifier = Modifier.fillMaxWidth(),
             colors = ButtonDefaults.buttonColors(
                 containerColor = Color(0xFF3066BE), // azul personalizado

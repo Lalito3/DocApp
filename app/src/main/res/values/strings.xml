@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">DocApp</string>
+    <string name="doctor1">Felipe De Jesús</string>
+    <string name="doctor2">Jocelyn Hof Reyes</string>
+    <string name="doctor3">Renata María López Peréz</string>
+    <string name="doctor4">Zoé Agatha Flores</string>
+    <string name="doctor5">Axel Mungía Pertil</string>
 </resources>

@@ -3,7 +3,7 @@ plugins {
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
     id("com.google.dagger.hilt.android")
-    kotlin("kapt")
+    kotlin ("kapt")
 }
 
 android {
@@ -52,6 +52,7 @@ dependencies {
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
     implementation(libs.androidx.navigation.compose)
+    implementation(libs.androidx.navigation.runtime.android)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -67,6 +68,8 @@ dependencies {
     implementation ("androidx.compose.ui:ui-tooling-preview:1.4.0")
     implementation ("androidx.lifecycle:lifecycle-runtime-compose:2.6.1")
     implementation("io.coil-kt:coil-compose:2.4.0")
+    implementation ("androidx.annotation:annotation:1.6.0")
+
 
     val room_version = "2.6.1"
     implementation ("androidx.room:room-ktx:$room_version")
