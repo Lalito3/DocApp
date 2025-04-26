@@ -12,6 +12,7 @@ import com.example.docapp.ui.InicioScreen
 import com.example.docapp.ui.screens.RegistroScreen
 import com.example.docapp.ui.screens.MenuScreen
 import com.example.docapp.ui.screens.MenuScreenList
+import com.example.docapp.ui.screens.PrincipalScreen
 import com.example.docapp.viewmodel.DocAppviewmodel
 import java.lang.reflect.Modifier
 
@@ -28,7 +29,9 @@ fun NavManager(viewModel: DocAppviewmodel){
         composable("Menu"){
             val doctores= DataDocSource().loadDoctors()
             MenuScreenList(medicos = doctores, navController = navController)
-
+        }
+        composable("Principal"){
+            PrincipalScreen(navController = navController)
         }
     }
 }

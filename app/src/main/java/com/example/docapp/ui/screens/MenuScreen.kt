@@ -74,10 +74,8 @@ fun MenuScreen(navController: NavController, medico: Medico, modifier: Modifier=
         }
 
     }
-
-
-
 }
+
 @Composable
 fun MenuScreenList(navController: NavController,medicos: List<Medico>, modifier: Modifier= Modifier ){
     LazyColumn(modifier = Modifier) {
