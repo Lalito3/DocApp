@@ -1,5 +1,6 @@
 package com.example.docapp.ui
 
+import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.material3.Text
@@ -15,6 +16,7 @@ import com.example.docapp.viewmodel.DocAppviewmodel
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextDecoration
@@ -22,11 +24,17 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavController
 import com.example.docapp.ui.theme.DocAppTheme
 import com.example.docapp.R
+import com.example.docapp.viewmodel.UserViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun InicioScreen(viewModel: DocAppviewmodel = viewModel(), navController: NavController) {
     val habilitarPantalla by viewModel.habilitarPantalla.collectAsState()
+    val userViewModel: UserViewModel = viewModel()
+    val context = LocalContext.current
+    var correo by remember { mutableStateOf("") }
+    var contrasena by remember { mutableStateOf("") }
+
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -62,10 +70,10 @@ fun InicioScreen(viewModel: DocAppviewmodel = viewModel(), navController: NavCon
         )
 
         TextField(
-            value = "",
-            onValueChange = {},
+            value = correo,
+            onValueChange = {correo = it},
             label = { Text("Correo electrónico") },
-            enabled = habilitarPantalla,
+            //enabled = habilitarPantalla,
             modifier = Modifier.fillMaxWidth()
         )
 
@@ -73,17 +81,29 @@ fun InicioScreen(viewModel: DocAppviewmodel = viewModel(), navController: NavCon
 
 
         TextField(
-            value = "",
-            onValueChange = {},
+            value = contrasena,
+            onValueChange = {contrasena = it},
             label = { Text("Contraseña") },
-            enabled = habilitarPantalla,
+            //enabled = habilitarPantalla,
             modifier = Modifier.fillMaxWidth()
         )
 
         Spacer(modifier = Modifier.height(16.dp))
 
         Button(
-            onClick = {navController.navigate("Principal") },
+            onClick = {
+                userViewModel.validarCredenciales(correo, contrasena){ existe ->
+                    if (existe){
+                        navController.navigate("Principal")
+                    } else {
+                        Toast.makeText(
+                            context,
+                            "Credenciales incorrectas",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+                }
+            },
             modifier = Modifier.fillMaxWidth(),
             colors = ButtonDefaults.buttonColors(
                 containerColor = Color(0xFF3066BE), // azul personalizado

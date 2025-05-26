@@ -14,17 +14,20 @@ import com.example.docapp.ui.screens.MenuScreen
 import com.example.docapp.ui.screens.MenuScreenList
 import com.example.docapp.ui.screens.PrincipalScreen
 import com.example.docapp.viewmodel.DocAppviewmodel
+import com.example.docapp.viewmodel.UserViewModel
+import androidx.lifecycle.viewmodel.compose.viewModel
 import java.lang.reflect.Modifier
 
 @Composable
-fun NavManager(viewModel: DocAppviewmodel){
+fun NavManager(docviewModel: DocAppviewmodel){
     val navController = rememberNavController()
     NavHost(navController = navController, startDestination = "Inicio"){
         composable("Inicio"){
-            InicioScreen(navController = navController, viewModel = viewModel)
+            InicioScreen(navController = navController, viewModel = docviewModel)
         }
         composable("Registro"){
-            RegistroScreen(navController = navController)
+            val userViewModel: UserViewModel = viewModel()
+            RegistroScreen(navController = navController, userViewModel = userViewModel)
         }
         composable("Menu"){
             val doctores= DataDocSource().loadDoctors()
