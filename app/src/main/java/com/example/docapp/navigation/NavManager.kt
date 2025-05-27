@@ -12,10 +12,12 @@ import com.example.docapp.ui.InicioScreen
 import com.example.docapp.ui.screens.RegistroScreen
 import com.example.docapp.ui.screens.MenuScreen
 import com.example.docapp.ui.screens.MenuScreenList
+import com.example.docapp.ui.screens.MedicineScreenList
 import com.example.docapp.ui.screens.PrincipalScreen
 import com.example.docapp.viewmodel.DocAppviewmodel
 import com.example.docapp.viewmodel.UserViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.docapp.data.DataMedicineSource
 import java.lang.reflect.Modifier
 
 @Composable
@@ -36,5 +38,14 @@ fun NavManager(docviewModel: DocAppviewmodel){
         composable("Principal"){
             PrincipalScreen(navController = navController)
         }
+        composable("Medicinas"){
+            val farmacos= DataMedicineSource().loadMedicines()
+            MedicineScreenList(medicinas= farmacos, navController=navController)
+
+        }
+        /*composable("Mis citas"){
+            val  appointmentViewModel: AppointViewModel = appointmentModel()
+            CitaScreen(navController=navController, viewModel=appointmentViewModel)
+        }*/
     }
 }
