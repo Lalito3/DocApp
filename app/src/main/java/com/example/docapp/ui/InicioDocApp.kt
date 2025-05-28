@@ -94,6 +94,7 @@ fun InicioScreen(viewModel: DocAppviewmodel = viewModel(), navController: NavCon
             onClick = {
                 userViewModel.validarCredenciales(correo, contrasena){ existe ->
                     if (existe){
+                        //docApp
                         navController.navigate("Principal")
                     } else {
                         Toast.makeText(

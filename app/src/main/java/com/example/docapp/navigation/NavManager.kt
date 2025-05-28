@@ -18,6 +18,7 @@ import com.example.docapp.viewmodel.DocAppviewmodel
 import com.example.docapp.viewmodel.UserViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.docapp.data.DataMedicineSource
+import com.example.docapp.ui.screens.AppointmentScreen
 import java.lang.reflect.Modifier
 
 @Composable
@@ -42,6 +43,11 @@ fun NavManager(docviewModel: DocAppviewmodel){
             val farmacos= DataMedicineSource().loadMedicines()
             MedicineScreenList(medicinas= farmacos, navController=navController)
 
+        }
+        composable ("Appointment/{nombre}"){
+            backStackEntry ->
+            val nombre = backStackEntry.arguments?.getString("nombre") ?: "Desconocido"
+            AppointmentScreen(medicoNombre = nombre, navController = navController)
         }
         /*composable("Mis citas"){
             val  appointmentViewModel: AppointViewModel = appointmentModel()
