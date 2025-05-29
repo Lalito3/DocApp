@@ -28,11 +28,14 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.example.docapp.R
+import com.example.docapp.viewmodel.UserViewModel
+import com.example.docapp.model.User
 
 @Composable
-fun RegistroScreen(navController: NavController ){
+fun RegistroScreen(navController: NavController, userViewModel: UserViewModel = viewModel()){
     val scrollState = rememberScrollState()
 
     var nombre by remember {
@@ -140,7 +143,21 @@ fun RegistroScreen(navController: NavController ){
 
         Button(
             onClick = {
-                navController.navigate("Inicio")
+                //navController.navigate("Inicio")
+                val user = User (
+                    nombre = nombre,
+                    edad = edad.toIntOrNull()?: 0,
+                    estatura = estatura.toFloatOrNull()?: 0f,
+                    peso = peso.toFloatOrNull()?: 0f,
+                    alergias = alergias,
+                    correo = correo,
+                    contrasena = contrasena
+                )
+
+                userViewModel.mostrarToast("Registro Exitoso")
+                userViewModel.insertarUsuario(user){
+                    navController.navigate("Inicio")
+                }
             },
             modifier = Modifier.fillMaxWidth(),
             colors = ButtonDefaults.buttonColors(
