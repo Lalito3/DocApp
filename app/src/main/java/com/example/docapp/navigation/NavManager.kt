@@ -1,9 +1,11 @@
 package com.example.docapp.navigation
 
 import android.annotation.SuppressLint
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material3.DrawerValue
@@ -25,6 +27,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
@@ -32,6 +35,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import com.example.docapp.R
 import com.example.docapp.data.DataDocSource
 import com.example.docapp.ui.InicioScreen
 import com.example.docapp.ui.screens.RegistroScreen
@@ -59,20 +63,19 @@ fun NavManager(viewModel: DocAppviewmodel) {
             drawerState = drawerState,
             drawerContent = {
                 ModalDrawerSheet {
-                    Text("App Main", modifier = Modifier.padding(16.dp))
-                    HorizontalDivider()
-                    NavigationDrawerItem(
-                        label = { Text(text = "Menu") },
-                        selected = currentRoute == "Menu",
-                        onClick = {
-                            scope.launch {
-                                drawerState.close()
-                                navController.navigate("Menu") {
-                                    popUpTo("Menu") { inclusive = true }
-                                }
-                            }
-                        }
-                    )
+
+
+                    Image(
+                        painter = painterResource(id = R.drawable.logo),
+                        contentDescription = "LOGO",
+                        modifier = Modifier.size(100.dp,100.dp).align(Alignment.CenterHorizontally), /*Modifica el espacio de la imagen*/
+                        alpha = 0.9f,
+                        alignment = Alignment.Center)
+
+                    Text("DocApp", modifier = Modifier.padding(16.dp).fillMaxWidth(), textAlign = TextAlign.Center)
+
+                    //HorizontalDivider()
+
                     NavigationDrawerItem(
                         label = { Text(text = "Principal") },
                         selected = currentRoute == "Principal",
@@ -81,6 +84,19 @@ fun NavManager(viewModel: DocAppviewmodel) {
                                 drawerState.close()
                                 navController.navigate("Principal") {
                                     popUpTo("Principal") { inclusive = true }
+                                }
+                            }
+                        }
+                    )
+
+                    NavigationDrawerItem(
+                        label = { Text(text = "Menu") },
+                        selected = currentRoute == "Menu",
+                        onClick = {
+                            scope.launch {
+                                drawerState.close()
+                                navController.navigate("Menu") {
+                                    popUpTo("Menu") { inclusive = true }
                                 }
                             }
                         }
