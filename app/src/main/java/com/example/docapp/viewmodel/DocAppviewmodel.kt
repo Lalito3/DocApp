@@ -1,5 +1,8 @@
 package com.example.docapp.viewmodel
 
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -15,6 +18,8 @@ class DocAppviewmodel : ViewModel() {
 
     val habilitarPantalla: StateFlow<Boolean> = _habilitarPantalla.asStateFlow()
     val contrasenaolvidada: StateFlow<Boolean> = _contrasenaolvidada.asStateFlow()
+    var usuarioActivoId by mutableStateOf<Int?>(null)
+
 
 
     fun habilitarRegistro() {

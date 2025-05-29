@@ -17,9 +17,6 @@ import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.ui.Alignment
@@ -35,32 +32,27 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.docapp.R
-import com.example.docapp.model.Medico
+import com.example.docapp.model.Medicina
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.compose.rememberNavController
 
 @Composable
-fun MenuScreen(navController: NavController, medico: Medico, modifier: Modifier= Modifier){
-    Card (
-        shape = RoundedCornerShape(12.dp),
-        modifier = Modifier
+fun MedicineScreen(navController: NavController, medicina: Medicina, modifier: Modifier= Modifier){
+    Card (modifier = Modifier
         .fillMaxSize()
         .padding(8.dp)
         .background(color= Color.LightGray, shape= RoundedCornerShape(12.dp)),
     )
 
-        {
+    {
         Row(
             modifier=Modifier.padding(16.dp)
                 .fillMaxWidth(),
             verticalAlignment=Alignment.CenterVertically
         ){
             Image(
-                painter = painterResource(id=medico.drawableResId),
-                contentDescription = "Médico ${medico.nombre_med}",
+                painter = painterResource(id=medicina.drawableResId),
+                contentDescription = "Médico ${medicina.nombre_med}",
                 modifier = Modifier.size(170.dp).clip(CircleShape),
                 contentScale = ContentScale.Crop
             )
@@ -68,29 +60,16 @@ fun MenuScreen(navController: NavController, medico: Medico, modifier: Modifier=
                 verticalArrangement = Arrangement.Center)
             {
                 Text(
-                    text = "${medico.nombre_med}",
+                    text = "${medicina.nombre_med}",
                     modifier = Modifier.padding(7.dp),
                     style = MaterialTheme.typography.headlineMedium,
                     fontSize = 17.sp
                 )
                 Text(
-                    text = " ${medico.especialidad} ",
+                    text = " ${medicina.costo} ",
                     modifier = Modifier.padding(7.dp),
                     fontSize = 16.sp
                 )
-                Spacer(modifier = Modifier.height(4.dp))
-                Text(
-                    text = "⭐ 4.3",
-                    fontSize = 14.sp,
-
-                )
-                Spacer(modifier = Modifier.width(8.dp))
-                Button(
-                    onClick = {navController.navigate("Appointment/${medico.nombre_med}")},
-                    colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF7A52FF))
-                ) {
-                    Text("Agendar Cita", fontSize = 12.sp)
-                }
             }
         }
 
@@ -98,27 +77,14 @@ fun MenuScreen(navController: NavController, medico: Medico, modifier: Modifier=
 }
 
 @Composable
-fun MenuScreenList(navController: NavController,medicos: List<Medico>, modifier: Modifier= Modifier ){
+fun MedicineScreenList(navController: NavController,medicinas: List<Medicina>, modifier: Modifier= Modifier ){
     LazyColumn(modifier = Modifier) {
-        items(medicos){
-            medico-> MenuScreen(
-                navController = navController,
-                medico=medico,
-                modifier = Modifier.padding(10.dp)
-            )}
+        items(medicinas){
+                medicina-> MedicineScreen(
+            navController = navController,
+            medicina=medicina,
+            modifier = Modifier.padding(10.dp)
+        )}
 
     }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun MenuScreenPreview(){
-    val navController = rememberNavController()
-    val sampleMedico = Medico(
-        stringResourceId = R.string.doctor1,
-        nombre_med = "Dra. Ana Pérez",
-        especialidad = "cardiología",
-        drawableResId = R.drawable.d2
-    )
-    MenuScreen(navController = navController, medico = sampleMedico, modifier = Modifier)
 }

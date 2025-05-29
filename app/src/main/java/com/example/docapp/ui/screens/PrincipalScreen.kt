@@ -76,7 +76,7 @@ fun PrincipalScreen(navController : NavController, modifier: Modifier = Modifier
                             CardMenu(
                                 text = "Mis citas",
                                 imageId = R.drawable.logo,
-                                onClick = { println("Mis citas")},
+                                onClick = {navController.navigate("Mis citas")},
                                 modifier = Modifier
                                     .weight(1f)
                                     .padding(10.dp)
@@ -97,7 +97,7 @@ fun PrincipalScreen(navController : NavController, modifier: Modifier = Modifier
                             CardMenu(
                                 text = "Medicinas",
                                 imageId = R.drawable.im1,
-                                onClick = { println("Medicinas")},
+                                onClick = { navController.navigate("Medicinas")},
                                 modifier = Modifier
                                     .weight(1f)
                                     .padding(10.dp)

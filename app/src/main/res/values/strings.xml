@@ -5,4 +5,9 @@
     <string name="doctor3">Renata María López Peréz</string>
     <string name="doctor4">Zoé Agatha Flores</string>
     <string name="doctor5">Axel Mungía Pertil</string>
+    <string name="medicina1">Paracetamol</string>
+    <string name="medicina2">Omeprazol</string>
+    <string name="medicina3">Salbutamol</string>
+    <string name="medicina4">Aspirina</string>
+    <string name="medicina5">Ibuprofeno</string>
 </resources>

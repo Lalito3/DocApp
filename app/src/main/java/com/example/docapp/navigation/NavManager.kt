@@ -40,6 +40,7 @@ import com.example.docapp.data.DataDocSource
 import com.example.docapp.ui.InicioScreen
 import com.example.docapp.ui.screens.RegistroScreen
 import com.example.docapp.ui.screens.MenuScreenList
+import com.example.docapp.ui.screens.MedicineScreenList
 import com.example.docapp.ui.screens.PrincipalScreen
 import com.example.docapp.viewmodel.DocAppviewmodel
 
@@ -154,5 +155,19 @@ fun NavigationContent(navController: NavHostController, viewModel: DocAppviewmod
         composable("Principal") {
             PrincipalScreen(navController = navController)
         }
+        composable("Medicinas"){
+            val farmacos= DataMedicineSource().loadMedicines()
+            MedicineScreenList(medicinas= farmacos, navController=navController)
+
+        }
+        composable ("Appointment/{nombre}"){
+            backStackEntry ->
+            val nombre = backStackEntry.arguments?.getString("nombre") ?: "Desconocido"
+            AppointmentScreen(medicoNombre = nombre, navController = navController)
+        }
+        /*composable("Mis citas"){
+            val  appointmentViewModel: AppointViewModel = appointmentModel()
+            CitaScreen(navController=navController, viewModel=appointmentViewModel)
+        }*/
     }
 }
