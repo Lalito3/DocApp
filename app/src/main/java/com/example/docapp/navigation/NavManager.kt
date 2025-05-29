@@ -37,7 +37,9 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.example.docapp.R
 import com.example.docapp.data.DataDocSource
+import com.example.docapp.data.DataMedicineSource
 import com.example.docapp.ui.InicioScreen
+import com.example.docapp.ui.screens.AppointmentScreen
 import com.example.docapp.ui.screens.RegistroScreen
 import com.example.docapp.ui.screens.MenuScreenList
 import com.example.docapp.ui.screens.MedicineScreenList
