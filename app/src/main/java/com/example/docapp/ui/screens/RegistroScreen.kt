@@ -153,7 +153,6 @@ fun RegistroScreen(navController: NavController, userViewModel: UserViewModel = 
                     correo = correo,
                     contrasena = contrasena
                 )
-
                 userViewModel.mostrarToast("Registro Exitoso")
                 userViewModel.insertarUsuario(user){
                     navController.navigate("Inicio")

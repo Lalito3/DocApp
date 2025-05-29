@@ -14,11 +14,19 @@ import androidx.compose.runtime.*
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.docapp.viewmodel.DocAppviewmodel
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Visibility
+import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavController
@@ -78,23 +86,15 @@ fun InicioScreen(viewModel: DocAppviewmodel = viewModel(), navController: NavCon
         )
 
         Spacer(modifier = Modifier.height(8.dp))
-
-
-        TextField(
-            value = contrasena,
-            onValueChange = {contrasena = it},
-            label = { Text("Contraseña") },
-            //enabled = habilitarPantalla,
-            modifier = Modifier.fillMaxWidth()
-        )
-
+        PasswordTextField(contrasena = contrasena, onPasswordChange = {contrasena = it})
         Spacer(modifier = Modifier.height(16.dp))
 
         Button(
             onClick = {
-                userViewModel.validarCredenciales(correo, contrasena){ existe ->
-                    if (existe){
-                        //docApp
+                userViewModel.validarCredenciales(correo, contrasena){ usuario ->
+                    if (usuario != null){
+                        viewModel.usuarioActivoId = usuario.id
+                        viewModel.usuarioActivoNombre = usuario.nombre
                         navController.navigate("Principal")
                     } else {
                         Toast.makeText(
@@ -114,15 +114,6 @@ fun InicioScreen(viewModel: DocAppviewmodel = viewModel(), navController: NavCon
             Text("Siguiente")
         }
         Spacer(modifier = Modifier.height(16.dp))
-        /*Text(
-            text= "¿Olvidaste tu contraseña?",
-            color = Color(0xFF3066BE),
-            fontWeight = FontWeight.Bold,
-            modifier = Modifier
-                .padding(top = 8.dp)
-                .clickable { viewModel.PaswordFor() }
-        )
-        Spacer(modifier = Modifier.height(60.dp))*/
         Text(
             text= "¿No tienes cuenta? Regístrate aquí",
             color = Color(0xFF3F51B5),
@@ -132,21 +123,31 @@ fun InicioScreen(viewModel: DocAppviewmodel = viewModel(), navController: NavCon
                 .padding(top = 8.dp)
                 .clickable { navController.navigate("Registro") }
         )
-        /*
-        Button(
-            onClick = { viewModel.PaswordFor() },
-            modifier = Modifier.fillMaxWidth()
-        ) {
-            Text("Olvidaste tu contraseña")
-        } */
     }
 }
-/*
-@Preview(showBackground = true)
+
 @Composable
-fun RegistroScreenPreview() {
-    DocAppTheme {
-        InicioScreen(navController: NavController)
-    }
+fun PasswordTextField(contrasena: String, onPasswordChange: (String) -> Unit){
+    var contrasenaVisible by remember { mutableStateOf(false) }
+    TextField(
+        value = contrasena,
+        onValueChange = onPasswordChange,
+        label = { Text("Contraseña")},
+        singleLine = true,
+        visualTransformation = if (contrasenaVisible) VisualTransformation.None else PasswordVisualTransformation(),
+        trailingIcon = {
+            val image = if(contrasenaVisible)
+                Icons.Filled.Visibility
+            else Icons.Filled.VisibilityOff
+
+            IconButton(onClick = {contrasenaVisible = !contrasenaVisible}) {
+                Icon(imageVector = image, contentDescription = if(contrasenaVisible) "Ocultar" else "Mostrar")
+            }
+        },
+        keyboardOptions = KeyboardOptions(
+            keyboardType = KeyboardType.Password,
+            imeAction = ImeAction.Done
+        ),
+        modifier = Modifier.fillMaxWidth()
+    )
 }
-*/

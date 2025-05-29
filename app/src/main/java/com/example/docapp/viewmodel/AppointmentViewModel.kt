@@ -27,4 +27,25 @@ class AppointmentViewModel: ViewModel() {
             }
         }
     }
+
+    fun obtenerCitasDeUsuario(context: Context, usuarioId: Int, onResult: (List<Cita>) -> Unit) {
+        viewModelScope.launch(Dispatchers.IO) {
+            val db = DocAppDataBase.getDataBAse(context)
+            val citas = db.citaDao().obtenerCitasDeUsuario(usuarioId)
+            launch(Dispatchers.Main) {
+                onResult(citas)
+            }
+        }
+    }
+
+    fun eliminarCita(context: Context, cita: Cita, onSuccess: () -> Unit){
+        viewModelScope.launch(Dispatchers.IO) {
+            val db = DocAppDataBase.getDataBAse(context)
+            db.citaDao().deleteCita(cita)
+            launch(Dispatchers.Main) {
+                Toast.makeText(context, "Cita cancelada",Toast.LENGTH_SHORT).show()
+                onSuccess()
+            }
+        }
+    }
 }

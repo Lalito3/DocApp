@@ -11,21 +11,27 @@ import kotlinx.coroutines.flow.asStateFlow
 
 class DocAppviewmodel : ViewModel() {
     private val _habilitarPantalla = MutableStateFlow(false)
-    private val _contrasenaolvidada = MutableStateFlow(false)
 
     private val _sesionIniciada = MutableStateFlow(true)
     val sesionIniciada: StateFlow<Boolean> get() = _sesionIniciada
 
     val habilitarPantalla: StateFlow<Boolean> = _habilitarPantalla.asStateFlow()
-    val contrasenaolvidada: StateFlow<Boolean> = _contrasenaolvidada.asStateFlow()
     var usuarioActivoId by mutableStateOf<Int?>(null)
-
-
+    var usuarioActivoNombre by mutableStateOf<String?>(null)
 
     fun habilitarRegistro() {
         _habilitarPantalla.value = true
     }
-    fun PaswordFor(){
-        _contrasenaolvidada.value=false
+
+    fun setUsuarioActivo(id: Int){
+        usuarioActivoId = id
+    }
+    fun setUsuarioName(nombre: String){
+        usuarioActivoNombre = nombre
+    }
+    fun cerrarSesion(){
+        usuarioActivoId = null
+        usuarioActivoNombre = null
+        _sesionIniciada.value = false
     }
 }

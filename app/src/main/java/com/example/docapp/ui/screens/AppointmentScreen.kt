@@ -41,15 +41,15 @@ import com.example.docapp.data.DataDocSource
 import com.example.docapp.model.Medico
 import com.example.docapp.viewmodel.AppointmentViewModel
 import com.example.docapp.viewmodel.DocAppviewmodel
+import com.example.docapp.viewmodel.UserViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun AppointmentScreen(medicoNombre: String, navController: NavController){
+fun AppointmentScreen(medicoNombre: String, navController: NavController, userViewModel: DocAppviewmodel){
     val context = LocalContext.current
     var diaSeleccionado by remember { mutableStateOf("") }
     var horaSeleccionada by remember { mutableStateOf("") }
     val citaViewModel: AppointmentViewModel = viewModel()
-    val userViewModel: DocAppviewmodel = viewModel()
     val usuarioId = userViewModel.usuarioActivoId ?: 0
 
     val medico: Medico? = DataDocSource().loadDoctors().find { it.nombre_med == medicoNombre }
@@ -85,7 +85,6 @@ fun AppointmentScreen(medicoNombre: String, navController: NavController){
                     .height(220.dp),
                 contentScale = ContentScale.Crop
             )
-
             Spacer(modifier = Modifier.height(16.dp))
             Button(
                 onClick = {

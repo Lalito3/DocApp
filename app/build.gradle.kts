@@ -69,7 +69,7 @@ dependencies {
     implementation ("androidx.lifecycle:lifecycle-runtime-compose:2.6.1")
     implementation("io.coil-kt:coil-compose:2.4.0")
     implementation ("androidx.annotation:annotation:1.6.0")
-
+    implementation("androidx.compose.material:material-icons-extended:1.6.4")
 
     val room_version = "2.6.1"
     implementation ("androidx.room:room-ktx:$room_version")

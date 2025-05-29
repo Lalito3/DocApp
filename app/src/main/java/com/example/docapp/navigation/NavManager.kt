@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ExitToApp
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -27,7 +28,9 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
@@ -35,6 +38,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.docapp.R
 import com.example.docapp.data.DataDocSource
 import com.example.docapp.data.DataMedicineSource
@@ -43,7 +47,9 @@ import com.example.docapp.ui.screens.AppointmentScreen
 import com.example.docapp.ui.screens.RegistroScreen
 import com.example.docapp.ui.screens.MenuScreenList
 import com.example.docapp.ui.screens.MedicineScreenList
+import com.example.docapp.ui.screens.MisCitasScreen
 import com.example.docapp.ui.screens.PrincipalScreen
+import com.example.docapp.viewmodel.AppointmentViewModel
 import com.example.docapp.viewmodel.DocAppviewmodel
 
 import kotlinx.coroutines.launch
@@ -54,6 +60,7 @@ import kotlinx.coroutines.launch
 fun NavManager(viewModel: DocAppviewmodel) {
     val navController = rememberNavController()
     val sesionIniciada by viewModel.sesionIniciada.collectAsState()
+    val nombreUsuario = viewModel.usuarioActivoNombre ?: "Usuario"
 
     val navBackStackEntry = navController.currentBackStackEntryAsState().value
     val currentRoute = navBackStackEntry?.destination?.route
@@ -67,8 +74,6 @@ fun NavManager(viewModel: DocAppviewmodel) {
             drawerState = drawerState,
             drawerContent = {
                 ModalDrawerSheet {
-
-
                     Image(
                         painter = painterResource(id = R.drawable.logo),
                         contentDescription = "LOGO",
@@ -78,8 +83,13 @@ fun NavManager(viewModel: DocAppviewmodel) {
 
                     Text("DocApp", modifier = Modifier.padding(16.dp).fillMaxWidth(), textAlign = TextAlign.Center)
 
-                    //HorizontalDivider()
-
+                    Text(
+                        text = "¡Hola $nombreUsuario!",
+                        modifier = Modifier
+                            .padding(top = 8.dp, bottom = 4.dp)
+                            .align(Alignment.CenterHorizontally),
+                        textAlign = TextAlign.Center
+                    )
                     // ICONO PARA SCREEN PRINCIPAL
                     NavigationDrawerItem(
                         label = { Text(text = "Home") },
@@ -132,6 +142,31 @@ fun NavManager(viewModel: DocAppviewmodel) {
                             }
                         }
                     )
+                    NavigationDrawerItem(
+                        label = {
+                            Text(
+                                text = "Cerar sesión",
+                                color = Color(0xFF3066BE),
+                                fontWeight = FontWeight.Bold
+                            )
+                        },
+                        selected = false,
+                        onClick = {
+                            viewModel.cerrarSesion()
+                            navController.navigate("Inicio"){
+                                popUpTo(0){
+                                    inclusive = true
+                                }
+                            }
+                        },
+                        icon = {
+                            Icon(
+                                imageVector = Icons.Default.ExitToApp,
+                                contentDescription = "Cerrar sesion",
+                                tint = Color(0xFF3066BE)
+                            )
+                        }
+                    )
                 }
             }
         ) {
@@ -162,6 +197,7 @@ fun NavManager(viewModel: DocAppviewmodel) {
 
 @Composable
 fun NavigationContent(navController: NavHostController, viewModel: DocAppviewmodel) {
+    val appointmentViewModel: AppointmentViewModel = viewModel()
     NavHost(navController = navController, startDestination = "Splash") {
         composable("Splash") {
             val sesionIniciada by viewModel.sesionIniciada.collectAsState()
@@ -192,11 +228,13 @@ fun NavigationContent(navController: NavHostController, viewModel: DocAppviewmod
         composable ("Appointment/{nombre}"){
             backStackEntry ->
             val nombre = backStackEntry.arguments?.getString("nombre") ?: "Desconocido"
-            AppointmentScreen(medicoNombre = nombre, navController = navController)
+            AppointmentScreen(medicoNombre = nombre, navController = navController, userViewModel = viewModel)
         }
-        /*composable("Mis citas"){
-            val  appointmentViewModel: AppointViewModel = appointmentModel()
-            CitaScreen(navController=navController, viewModel=appointmentViewModel)
-        }*/
+        composable("Mis citas"){
+            val usuarioId = viewModel.usuarioActivoId
+            if (usuarioId != null){
+                MisCitasScreen(docAppViewModel = viewModel, navController = navController)
+        }
+        }
     }
 }

@@ -82,7 +82,6 @@ fun MenuScreen(navController: NavController, medico: Medico, modifier: Modifier=
                 Text(
                     text = "⭐ 4.3",
                     fontSize = 14.sp,
-
                 )
                 Spacer(modifier = Modifier.width(8.dp))
                 Button(

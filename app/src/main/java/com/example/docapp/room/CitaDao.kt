@@ -1,6 +1,7 @@
 package com.example.docapp.room
 
 import androidx.room.Dao
+import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
@@ -13,4 +14,7 @@ interface CitaDao {
 
     @Query("SELECT * FROM citas WHERE usuario_id = :usuarioId")
     suspend fun obtenerCitasDeUsuario(usuarioId: Int): List<Cita>
+
+    @Delete
+    fun deleteCita(cita: Cita)
 }

@@ -1,6 +1,7 @@
 package com.example.docapp.viewmodel
 
 import android.app.Application
+import android.app.SharedElementCallback
 import android.widget.Toast
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
@@ -9,6 +10,7 @@ import com.example.docapp.room.DocAppDataBase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.withContext
 
 class UserViewModel(application: Application): AndroidViewModel(application) {
     private val userDao = DocAppDataBase.getDataBAse(application).usuarioDao()
@@ -27,11 +29,11 @@ class UserViewModel(application: Application): AndroidViewModel(application) {
         Toast.makeText(getApplication(), mensaje, Toast.LENGTH_LONG).show()
     }
 
-    fun validarCredenciales( correo: String, contrasena: String, onResult: (Boolean) -> Unit){
+    fun validarCredenciales( correo: String, contrasena: String, callback: (User?) -> Unit){
         viewModelScope.launch (Dispatchers.IO){
             val usuario = userDao.obtenerUsuario(correo, contrasena)
-            launch (Dispatchers.Main) {
-                onResult(usuario != null)
+            withContext(Dispatchers.Main) {
+                callback(usuario)
             }
         }
     }
