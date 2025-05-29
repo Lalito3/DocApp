@@ -57,7 +57,7 @@ fun NavManager(viewModel: DocAppviewmodel) {
 
     val navBackStackEntry = navController.currentBackStackEntryAsState().value
     val currentRoute = navBackStackEntry?.destination?.route
-    val showDrawerScaffold = currentRoute in listOf("Menu", "Principal")
+    val showDrawerScaffold = currentRoute in listOf("Menu", "Principal", "Medicinas")
 
     if (showDrawerScaffold) {
         val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
@@ -80,8 +80,9 @@ fun NavManager(viewModel: DocAppviewmodel) {
 
                     //HorizontalDivider()
 
+                    // ICONO PARA SCREEN PRINCIPAL
                     NavigationDrawerItem(
-                        label = { Text(text = "Principal") },
+                        label = { Text(text = "Home") },
                         selected = currentRoute == "Principal",
                         onClick = {
                             scope.launch {
@@ -92,15 +93,41 @@ fun NavManager(viewModel: DocAppviewmodel) {
                             }
                         }
                     )
-
+                    // ICONO PARA MENÚ
                     NavigationDrawerItem(
-                        label = { Text(text = "Menu") },
+                        label = { Text(text = "Doctores") },
                         selected = currentRoute == "Menu",
                         onClick = {
                             scope.launch {
                                 drawerState.close()
                                 navController.navigate("Menu") {
                                     popUpTo("Menu") { inclusive = true }
+                                }
+                            }
+                        }
+                    )
+                    // ICONO PARA CITAS
+                    NavigationDrawerItem(
+                        label = { Text(text = "Mis citas") },
+                        selected = currentRoute == "Citas",
+                        onClick = {
+                            scope.launch {
+                                drawerState.close()
+                                navController.navigate("Citas") {
+                                    popUpTo("Citas") { inclusive = true }
+                                }
+                            }
+                        }
+                    )
+                    // ICONO PARA MEDICINAS
+                    NavigationDrawerItem(
+                        label = { Text(text = "Medicinas") },
+                        selected = currentRoute == "Medicinas",
+                        onClick = {
+                            scope.launch {
+                                drawerState.close()
+                                navController.navigate("Medicinas") {
+                                    popUpTo("Medicinas") { inclusive = true }
                                 }
                             }
                         }

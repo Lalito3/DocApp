@@ -114,7 +114,7 @@ fun InicioScreen(viewModel: DocAppviewmodel = viewModel(), navController: NavCon
             Text("Siguiente")
         }
         Spacer(modifier = Modifier.height(16.dp))
-        Text(
+        /*Text(
             text= "¿Olvidaste tu contraseña?",
             color = Color(0xFF3066BE),
             fontWeight = FontWeight.Bold,
@@ -122,7 +122,7 @@ fun InicioScreen(viewModel: DocAppviewmodel = viewModel(), navController: NavCon
                 .padding(top = 8.dp)
                 .clickable { viewModel.PaswordFor() }
         )
-        Spacer(modifier = Modifier.height(60.dp))
+        Spacer(modifier = Modifier.height(60.dp))*/
         Text(
             text= "¿No tienes cuenta? Regístrate aquí",
             color = Color(0xFF3F51B5),

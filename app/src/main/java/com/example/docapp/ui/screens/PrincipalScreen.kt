@@ -70,37 +70,35 @@ fun PrincipalScreen(navController : NavController, modifier: Modifier = Modifier
                                 imageId = R.drawable.d2,
                                 onClick = { navController.navigate("Menu") },
                                 modifier = Modifier
-                                    .weight(1f)
+                                    .weight(2f)
                                     .padding(10.dp)
-                            )
-                            CardMenu(
-                                text = "Mis citas",
-                                imageId = R.drawable.logo,
-                                onClick = {navController.navigate("Mis citas")},
-                                modifier = Modifier
-                                    .weight(1f)
-                                    .padding(10.dp)
+                                    .height(180.dp)
                             )
                         }
                     }
-
                     item {
                         Row {
                             CardMenu(
-                                text = "Resultados",
-                                imageId = R.drawable.m3,
-                                onClick = { println("Resultados") },
+                                text = "Mis citas",
+                                imageId = R.drawable.calendar,
+                                onClick = {navController.navigate("Mis citas")},
                                 modifier = Modifier
-                                    .weight(1f)
+                                    .weight(2f)
                                     .padding(10.dp)
+                                    .height(180.dp)
                             )
+                        }
+                    }
+                    item {
+                        Row {
                             CardMenu(
                                 text = "Medicinas",
                                 imageId = R.drawable.im1,
                                 onClick = { navController.navigate("Medicinas")},
                                 modifier = Modifier
-                                    .weight(1f)
-                                    .padding(10.dp)
+                                    .weight(2f)
+                                    .padding(horizontal = 20.dp, vertical = 10.dp)
+                                    .height(180.dp)
                             )
                         }
                     }
